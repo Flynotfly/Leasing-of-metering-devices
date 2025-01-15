@@ -13,6 +13,11 @@
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                {% if is_lessor %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if section == 'requested_payments' %}active{% endif %}" href="{% url 'request_paid_list' %}">Запросы на оплату</a>
+                    </li>
+                {% endif %} 
                 <li class="nav-item">
                     <a class="nav-link {% if section == 'contract' %}active{% endif %}" href="{% url 'list_contract' %}">Контракты</a>
                 </li>

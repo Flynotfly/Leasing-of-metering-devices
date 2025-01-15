@@ -61,6 +61,7 @@ def edit_contract(request, pk=None):
             'finance_details_form': finance_details_form,
             'company_name': company_name,
             'section': 'contract',
+            'is_lessor': request.user.profile.role == 'LR',
         }
     )
 
@@ -107,6 +108,7 @@ def view_contract(request, pk):
             'finance_details': finance_details,
             'company_name': company_name,
             'section': 'contract',
+            'is_lessor': request.user.profile.role == 'LR',
         }
     )
 
@@ -214,6 +216,7 @@ def edit_warranty(request, pk=None):
             'is_new': is_new,
             'company_name': company_name,
             'section': 'warranty',
+            'is_lessor': request.user.profile.role == 'LR',
         }
     )
 
@@ -241,6 +244,7 @@ def view_warranty(request, pk):
                 'is_seller': is_seller,
                 'company_name': company_name,
                 'section': 'warranty',
+                'is_lessor': request.user.profile.role == 'LR',
             }
         )
 
@@ -253,6 +257,7 @@ def request_paid_list(request):
         'payment/request_paid_list.html',
         {
             'payments': payments,
-            'section': 'contract',
+            'section': 'requested_payments',
+            'is_lessor': request.user.profile.role == 'LR',
         }
     )
