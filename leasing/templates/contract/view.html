@@ -21,10 +21,6 @@
                         <td>{{ contract.number }}</td>
                     </tr>
                     <tr>
-                        <th>Лизингодатель</th>
-                        <td>{{ contract.lessor.profile.display_name|default:contract.lessor.username }}</td>
-                    </tr>
-                    <tr>
                         <th>Лизингополучатель</th>
                         <td>{{ contract.lessee.profile.display_name|default:contract.lessee.username }}</td>
                     </tr>
