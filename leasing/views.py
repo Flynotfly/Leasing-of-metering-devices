@@ -159,8 +159,10 @@ def list_warranty(request):
     role = user.profile.role
     is_lessee = False
     is_seller = False
+    is_lessor = False
 
     if role == 'LR':
+        is_lessor = True
         warranties = WarrantyCase.objects.filter(contract__lessor=user)
     elif role == 'LE':
         is_lessee = True
@@ -179,6 +181,7 @@ def list_warranty(request):
         {
             'company_name': user.profile.display_name,
             'warranties': warranties,
+            'is_lessor': is_lessor,
             'is_lessee': is_lessee,
             'is_seller': is_seller,
             'section': 'warranty',

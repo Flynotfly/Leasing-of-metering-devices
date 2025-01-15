@@ -6,7 +6,11 @@
 
 {% block content %}
 	<div class="container mt-4">
-        <h2 class="mb-4">Гарантийные случаи с участием {{ company_name }}</h2>
+        {% if warranties %}
+        	<h2 class="mb-4">Гарантийные случаи</h2>
+        {% else %}
+            <h2 class="mb-4">Гарантийные случаи с участием {{ company_name }}</h2>
+        {% endif %}
 
         <!-- Add New Warranty Case Button (Visible to Lessees) -->
         {% if is_lessee %}
