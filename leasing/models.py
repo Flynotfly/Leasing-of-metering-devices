@@ -88,11 +88,6 @@ class FinanceDetails(models.Model):
 
 
 class Payment(models.Model):
-    PAID_CHOICES = [
-        ('F', 'Не оплачен'),
-        ('R', 'Запрос'),
-        ('T', 'Оплачен'),
-    ]
     contract = models.ForeignKey(
         Contract,
         related_name='payments',
@@ -100,11 +95,8 @@ class Payment(models.Model):
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    paid = models.CharField(
-        max_length=1,
-        choices=PAID_CHOICES,
-        default='F'
-    )
+    paid = models.BooleanField(default=False)
+    request_paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['date']
