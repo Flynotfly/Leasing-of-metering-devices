@@ -17,7 +17,7 @@
                     <li class="nav-item">
                         <a class="nav-link {% if section == 'requested_payments' %}active{% endif %}" href="{% url 'request_paid_list' %}">Запросы на оплату</a>
                     </li>
-                {% endif %} 
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link {% if section == 'contract' %}active{% endif %}" href="{% url 'list_contract' %}">Контракты</a>
                 </li>
@@ -25,7 +25,10 @@
                     <a class="nav-link {% if section == 'warranty' %}active{% endif %}" href="{% url 'list_warranty' %}">Гарантийные случаи</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light">Выйти</button>
+                    </form>
                 </li>
             </ul>
         </div>

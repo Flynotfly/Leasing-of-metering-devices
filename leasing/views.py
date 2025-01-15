@@ -150,7 +150,7 @@ def toggle_payment(request, pk, action):
     else:
         return HttpResponseForbidden("You are not authorized to perform this action.")
 
-    return redirect('view_payments', pk=payment.contract.pk)
+    return redirect('request_paid_list')
 
 
 @login_required
