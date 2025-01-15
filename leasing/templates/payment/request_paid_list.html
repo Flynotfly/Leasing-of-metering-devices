@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Запросы по платежам
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Запросы на изменение статуса платежей</h2>
+
+    <!-- Back to Contract List Button -->
+    <div class="mb-3">
+        <a href="{% url 'list_contract' %}" class="btn btn-secondary">Вернуться к списку контрактов</a>
+    </div>
+
+    <!-- Payment Request Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Дата платежа</th>
+                    <th>Контракт</th>
+                    <th>Лизингополучатель</th>
+                    <th>Сумма</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ payment.date|date:"d.m.Y" }}</td>
+                        <td>{{ payment.contract.number }}</td>
+                        <td>{{ payment.contract.lessee }}</td>
+                        <td>{{ payment.amount }} руб.</td>
+                        <td>
+                            <div class="d-flex">
+                                <a href="{% url 'toggle_payment_status' payment.id 'accept' %}" class="btn btn-success btn-sm me-2">
+                                    Принять
+                                </a>
+                                <a href="{% url 'toggle_payment_status' payment.id 'decline' %}" class="btn btn-danger btn-sm">
+                                    Отклонить
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

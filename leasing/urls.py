@@ -12,7 +12,9 @@ urlpatterns = [
     path('contract/list/', views.list_contract, name='list_contract'),
     path('contract/<int:pk>/', views.view_contract, name='view_contract'),
     path('contract/<int:pk>/payments/', views.view_payments, name='view_payments'),
-    path('payment/<int:pk>/toggle/', views.toggle_payment, name='toggle_payment_status'),
+
+    path('payment/<int:pk>/<str:action>/', views.toggle_payment, name='toggle_payment_status'),
+    path('payment/requested/', views.request_paid_list, name='request_paid_list'),
 
     path('warranty/list/', views.list_warranty, name='list_warranty'),
     path('warranty/add/', views.edit_warranty, name='add_warranty'),

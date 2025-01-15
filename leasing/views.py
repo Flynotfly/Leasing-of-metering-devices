@@ -133,13 +133,19 @@ def view_payments(request, pk):
 
 
 @login_required
-def toggle_payment(request, pk):
+def toggle_payment(request, pk, action):
     payment = get_object_or_404(Payment, pk=pk)
-    user_role = request.user.profile.role
 
     if request.user.profile.role == 'LR':
-        if not payment.paid:
+        if action == 'accept' and payment.request_paid and not payment.paid:
             payment.paid = True
+            payment.request_paid = False
+            payment.save()
+        elif action == 'decline' and payment.request_paid:
+            payment.request_paid = False
+            payment.save()
+    else:
+        return HttpResponseForbidden("You are not authorized to perform this action.")
 
     return redirect('view_payments', pk=payment.contract.pk)
 
@@ -237,3 +243,16 @@ def view_warranty(request, pk):
                 'section': 'warranty',
             }
         )
+
+
+@login_required
+def request_paid_list(request):
+    payments = Payment.objects.filter(request_paid=True)
+    return render(
+        request,
+        'payment/request_paid_list.html',
+        {
+            'payments': payments,
+            'section': 'contract',
+        }
+    )
