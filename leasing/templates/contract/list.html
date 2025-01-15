@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Список контрактов
+{% endblock %}
+
+{% block content %}
+	<div class="container my-5">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">Контракты с участием {{ company_name }}</h1>
+            {% if is_lessor %}
+            <a href="{% url 'add_contract' %}" class="btn btn-primary">+ Добавить контракт</a>
+            {% endif %}
+        </div>
+
+        <!-- Contracts Table -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Контракты</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Номер контракта</th>
+                            <th scope="col">Лизингодатель </th>
+                            <th scope="col">Лизингополучатель </th>
+                            <th scope="col">Продавец</th>
+                            <th scope="col">Прибор учета</th>
+                            <th scope="col">Дата начала действия </th>
+                            <th scope="col">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if contracts %}
+                            {% for contract in contracts %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ contract.number }}</td>
+                                    <td>{{ contract.lessor.profile.display_name|default:contract.lessor.username }}</td>
+                                    <td>{{ contract.lessee.profile.display_name|default:contract.lessee.username }}</td>
+                                    <td>{{ contract.seller.profile.display_name|default:contract.seller.username }}</td>
+                                    <td>{{ contract.meter }}</td>
+                                    <td>{{ contract.started|date:"d.m.Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'view_contract' contract.id %}" class="btn btn-sm btn-outline-primary">
+                                            Открыть
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4">Нет доступных контрактов.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+	Контракт
+{% endblock %}
+
+{% block content %}
+	<div class="container my-5">
+        <h1 class="mb-4">Детали контракта</h1>
+
+        <!-- Contract Information -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5>Информация</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Номер контракта</th>
+                        <td>{{ contract.number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Лизингодатель</th>
+                        <td>{{ contract.lessor.profile.display_name|default:contract.lessor.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Лизингополучатель</th>
+                        <td>{{ contract.lessee.profile.display_name|default:contract.lessee.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Продавец</th>
+                        <td>{{ contract.seller.profile.display_name|default:contract.seller.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Прибор учета (серийный номер)</th>
+                        <td>{{ contract.meter }}</td>
+                    </tr>
+                    <tr>
+                        <th>Дата начала действия</th>
+                        <td>{{ contract.started|date:"d.m.Y" }}</td>
+                    </tr>
+{#                    <tr>#}
+{#                        <th>Дата окончания действия</th>#}
+{#                        <td>{{ contract.ended|default:"N/A"|date:"Y-m-d" }}</td>#}
+{#                    </tr>#}
+                </table>
+            </div>
+        </div>
+
+        <!-- Finance Details -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5>Финансовые детали</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Стоимость</th>
+                        <td>{{ finance_details.cost|floatformat:2|intcomma }} руб.</td>
+                    </tr>
+                    <tr>
+                        <th>Авансовый платеж</th>
+                        <td>{{ finance_details.upfront|floatformat:2|intcomma }} руб.</td>
+                    </tr>
+                    <tr>
+                        <th>Финальный платеж</th>
+                        <td>{{ finance_details.final_payment|floatformat:2|intcomma }} руб.</td>
+                    </tr>
+                    <tr>
+                        <th>Срок (месяцы)</th>
+                        <td>{{ finance_details.period }}</td>
+                    </tr>
+                    <tr>
+                        <th>Процентная ставка (%)</th>
+                        <td>{{ finance_details.rate|floatformat:2 }}%</td>
+                    </tr>
+                    <tr>
+                        <th>Ставка НДС (%)</th>
+                        <td>{{ finance_details.vat_rate|floatformat:2 }}%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+{#        <!-- Payment Summary -->#}
+{#        <div class="card mb-4 shadow-sm">#}
+{#            <div class="card-header bg-warning text-dark">#}
+{#                <h5>Выплаты</h5>#}
+{#            </div>#}
+{#            <div class="card-body">#}
+{#                <table class="table table-bordered">#}
+{#                    <tr>#}
+{#                        <th>Всего выплачено</th>#}
+{#                        <td>{{ total_paid|floatformat:2|intcomma }} руб.</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <th>Осталось</th>#}
+{#                        <td>{{ remaining_balance|floatformat:2|intcomma }} руб.</td>#}
+{#                    </tr>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end gap-2">
+            <a href="{% url 'view_payments' contract.id %}" class="btn btn-outline-primary">График платежей</a>
+            <a href="{% url 'list_contract' %}" class="btn btn-outline-secondary">Список контрактов</a>
+        </div>
+    </div>
+{% endblock %}

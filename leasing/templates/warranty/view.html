@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="container mt-4">
+        <h2>Гарантийный случай</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Контракт: {{ warranty.contract }}</h5>
+                <p><strong>Описание:</strong> {{ warranty.description }}</p>
+                <p><strong>Статус:</strong> 
+                    {% if warranty.resolved == 'CR' %}
+                        Создан
+                    {% elif warranty.resolved == 'IW' %}
+                        В работе
+                    {% elif warranty.resolved == 'CO' %}
+                        Завершен
+                    {% endif %}
+                </p>
+                <p><strong>Дата создания:</strong> {{ warranty.created }}</p>
+            </div>
+        </div>
+    
+        {% if is_seller %}
+        <form method="post">
+            {% csrf_token %}
+            {% if warranty.resolved == 'CR' %}
+                <button type="submit" class="btn btn-warning">Пометить как "В работе"</button>
+            {% elif warranty.resolved == 'IW' %}
+                <button type="submit" class="btn btn-success">Пометить как "Завершен"</button>
+            {% endif %}
+        </form>
+        {% endif %}
+    
+        <a href="{% url 'list_warranty' %}" class="btn btn-secondary mt-3">Вернуться</a>
+    </div>
+{% endblock %}

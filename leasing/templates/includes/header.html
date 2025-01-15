@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+        <!-- Company Name -->
+        <a class="navbar-brand" href="#">
+            {{ company_name }}
+        </a>
+
+        <!-- Navbar Toggle for Mobile View -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if section == 'contract' %}active{% endif %}" href="{% url 'list_contract' %}">Контракты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if section == 'warranty' %}active{% endif %}" href="{% url 'list_warranty' %}">Гарантийные случаи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
