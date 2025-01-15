@@ -25,7 +25,6 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Номер контракта</th>
-                            <th scope="col">Лизингодатель </th>
                             <th scope="col">Лизингополучатель </th>
                             <th scope="col">Продавец</th>
                             <th scope="col">Прибор учета</th>
@@ -39,7 +38,6 @@
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td>{{ contract.number }}</td>
-                                    <td>{{ contract.lessor.profile.display_name|default:contract.lessor.username }}</td>
                                     <td>{{ contract.lessee.profile.display_name|default:contract.lessee.username }}</td>
                                     <td>{{ contract.seller.profile.display_name|default:contract.seller.username }}</td>
                                     <td>{{ contract.meter }}</td>
