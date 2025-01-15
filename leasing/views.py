@@ -121,7 +121,7 @@ def view_payments(request, pk):
     payments = Payment.objects.filter(contract=contract)
     return render(
         request,
-        'contract/payments.html',
+        'payment/view.html',
         {
             'payments': payments,
             'is_lessor': is_lessor,
@@ -138,17 +138,8 @@ def toggle_payment(request, pk):
     user_role = request.user.profile.role
 
     if request.user.profile.role == 'LR':
-        if payment.paid == 'R':
-            action = request.POST.get('action')
-            if action == 'approve':
-                payment.paid = 'T'
-            elif action == 'deny':
-                payment.paid = 'F'
-            payment.save()
-    elif user_role == 'LE':
-        if payment.paid == 'F':
-            payment.paid = 'R'
-            payment.save()
+        if not payment.paid:
+            payment.paid = True
 
     return redirect('view_payments', pk=payment.contract.pk)
 

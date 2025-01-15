@@ -22,9 +22,6 @@
                         <th>Дата платежа</th>
                         <th>Сумма</th>
                         <th>Статус оплаты</th>
-                        {% if is_lessor %}
-                            <th>Действия</th>
-                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -34,25 +31,14 @@
                             <td>{{ payment.date|date:"d.m.Y" }}</td>
                             <td>{{ payment.amount }} руб.</td>
                             <td>
-                                {% if payment.paid == 'T' %}
+                                {% if payment.paid %}
                                     <span class="badge bg-success">Оплачен</span>
-                                {% elif payment.paid == 'F' %}
-                                    <span class="badge bg-danger">Неоплачен</span>
-                                {% elif payment.paid == 'R' %}
+                                {% elif payment.request_paid %}
                                     <span class="badge bg-warning text-dark">Запрошено изменение</span>
+                                {% elif not payment.paid %}
+                                    <span class="badge bg-danger">Неоплачен</span>
                                 {% endif %}
                             </td>
-                            {% if is_lessor %}
-                                <td>
-                                    {% if payment.paid == R %}
-                                    <form method="post" action="{% url 'toggle_payment_status' payment.id %}">
-                                        {% csrf_token %}
-                                            <button type="submit" class="btn btn-success btn-sm">Подтвердить</button>
-                                            <button type="submit" class="btn btn-danger btn-sm">Отклонить</button>
-                                    </form>
-                                    {% endif %}
-                                </td>
-                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
