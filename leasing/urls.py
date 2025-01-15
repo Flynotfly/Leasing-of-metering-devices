@@ -13,8 +13,9 @@ urlpatterns = [
     path('contract/<int:pk>/', views.view_contract, name='view_contract'),
     path('contract/<int:pk>/payments/', views.view_payments, name='view_payments'),
 
-    path('payment/<int:pk>/<str:action>/', views.toggle_payment, name='toggle_payment_status'),
     path('payment/requested/', views.request_paid_list, name='request_paid_list'),
+    path('payment/<int:pk>/request/', views.request_payment, name='request_payment'),
+    path('payment/<int:pk>/<str:action>/', views.toggle_payment, name='toggle_payment_status'),
 
     path('warranty/list/', views.list_warranty, name='list_warranty'),
     path('warranty/add/', views.edit_warranty, name='add_warranty'),

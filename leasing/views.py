@@ -127,6 +127,7 @@ def view_payments(request, pk):
         {
             'payments': payments,
             'is_lessor': is_lessor,
+            'is_lessee': request.user.profile.role == 'LE',
             'company_name': request.user.profile.display_name,
             'section': 'contract',
             'contract': contract,
@@ -261,3 +262,14 @@ def request_paid_list(request):
             'is_lessor': request.user.profile.role == 'LR',
         }
     )
+
+
+@login_required
+def request_payment(request, pk):
+    payment = get_object_or_404(Payment, pk=pk)
+
+    if not payment.paid and not payment.request_paid:
+        payment.request_paid = True
+        payment.save()
+
+    return redirect('view_payments', pk=payment.contract.pk)

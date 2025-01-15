@@ -1,48 +1,60 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	График платежей
+    График платежей
 {% endblock %}
 
 {% block content %}
-	<div class="container mt-4">
-        <h2 class="mb-4">График платежей по контракту {{ contract.number }}</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">График платежей по контракту {{ contract.number }}</h2>
 
-        <!-- Back to Contract List Button -->
-        <div class="mb-3">
-            <a href="{% url 'view_contract' contract.id %}" class="btn btn-secondary">Вернуться к контракту</a>
-        </div>
+    <!-- Back to Contract List Button -->
+    <div class="mb-3">
+        <a href="{% url 'view_contract' contract.id %}" class="btn btn-secondary">Вернуться к контракту</a>
+    </div>
 
-        <!-- Payment Table -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-primary">
+    <!-- Payment Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Дата платежа</th>
+                    <th>Сумма</th>
+                    <th>Статус оплаты</th>
+                    {% if is_lessee %}
+                        <th>Действия</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
                     <tr>
-                        <th>#</th>
-                        <th>Дата платежа</th>
-                        <th>Сумма</th>
-                        <th>Статус оплаты</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for payment in payments %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ payment.date|date:"d.m.Y" }}</td>
-                            <td>{{ payment.amount }} руб.</td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ payment.date|date:"d.m.Y" }}</td>
+                        <td>{{ payment.amount }} руб.</td>
+                        <td>
+                            {% if payment.paid %}
+                                <span class="badge bg-success">Оплачен</span>
+                            {% elif payment.request_paid %}
+                                <span class="badge bg-warning text-dark">Запрошено изменение</span>
+                            {% elif not payment.paid %}
+                                <span class="badge bg-danger">Неоплачен</span>
+                            {% endif %}
+                        </td>
+                        {% if is_lessee %}
                             <td>
-                                {% if payment.paid %}
-                                    <span class="badge bg-success">Оплачен</span>
-                                {% elif payment.request_paid %}
-                                    <span class="badge bg-warning text-dark">Запрошено изменение</span>
-                                {% elif not payment.paid %}
-                                    <span class="badge bg-danger">Неоплачен</span>
+                                {% if not payment.paid and not payment.request_paid %}
+                                    <a href="{% url 'request_payment' payment.id %}" class="btn btn-primary btn-sm">
+                                        Отметить как оплаченный
+                                    </a>
                                 {% endif %}
                             </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}
