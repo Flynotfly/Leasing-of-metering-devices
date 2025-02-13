@@ -27,7 +27,7 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{{ payment.date|date:"d.m.Y" }}</td>
                         <td>{{ payment.contract.number }}</td>
-                        <td>{{ payment.contract.lessee }}</td>
+                        <td>{{ payment.contract.lessee.profile.display_name }}</td>
                         <td>{{ payment.amount }} руб.</td>
                         <td>
                             <div class="d-flex">
