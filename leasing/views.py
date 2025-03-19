@@ -273,7 +273,3 @@ def request_payment(request, pk):
         payment.save()
 
     return redirect('view_payments', pk=payment.contract.pk)
-
-
-def redirect_to_login(request):
-    return redirect('login')

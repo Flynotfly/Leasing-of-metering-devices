@@ -8,19 +8,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    {% include 'includes/header.html' %}ё
+    {% include 'includes/header.html' %}
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"
-        integrity="Pz9hYT81LENRPz9ZPz8EPwk/Xz9hPz8ZSiU4Pz9wRz8/PzY/Pz8EOw8FPz8+OT8NCg=="
-        crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="Pz8/Pz9CPz9nZz8/Wj8PQD8uL3RmP3VBCz9hGT9KPxdiJD8/bz8/Pz8/P3Q/PxkzDQo="
-        crossorigin="anonymous"
-    ></script>
+    <script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     const csrftoken = Cookies.get('csrftoken')
         document.addEventListener('DOMContentLoaded', (event) => {
