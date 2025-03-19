@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ga$sqf5lxzjx97nyliuer=%3eglq)5@c7#i+#62o)(6*v1g+_6'
+from decouple import config
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'leasing.middleware.ContentSecurityPolicyMiddleware',
+    'leasing.middleware.HideServerHeaderMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -131,3 +135,12 @@ LOGIN_REDIRECT_URL = 'list_contract'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+SESSION_COOKIE_DOMAIN = 'localhost'
+CSRF_COOKIE_DOMAIN = 'localhost'
+
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
