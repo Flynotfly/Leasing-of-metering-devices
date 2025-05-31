@@ -22,3 +22,4 @@ urlpatterns = [
     path('warranty/<int:pk>/edit/', views.edit_warranty, name='edit_warranty'),
     path('warranty/<int:pk>/', views.view_warranty, name='view_warranty'),
 ]
+
